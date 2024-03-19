@@ -1,0 +1,18 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Fouth project for Hexlet!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/purple-jabba"
+  },
+  "author": "Denis Karnafel",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.3"
+  }
+}
