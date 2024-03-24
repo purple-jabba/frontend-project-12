@@ -1,6 +1,3 @@
-import {
-  Button, Form, Col, Container, Card, Row, FloatingLabel,
-} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import img from '../assets/avatar.jpg';
@@ -11,73 +8,67 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    onSubmit: (values) => values,
+    onSubmit: (values) => {
+      console.log(values);
+      return values;
+    },
   });
 
   return (
-    <Container className="h-100" fluid>
-      <Row className="justify-content-center align-content-center h-100">
-        <Col className="col-12 col-md-8 col-xxl-6">
-          <Card className="shadow-sm">
-            <Card.Body className="p-5 row">
+    <div className="container-fluid h-100">
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
+          <div className="card shadow-sm">
+            <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img
-                  src={img}
-                  className="rounded-сircle"
-                  alt="Log in page"
-                />
+                <img src={img} className="rounded-circle" alt="Войти" />
               </div>
-              <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+              <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0" disabled={formik.isSubmitting}>
                 <h1 className="text-center mb-4">Войти</h1>
-                <fieldset disabled={formik.isSubmitting}>
-                  <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="username" label="Ваш ник">
-                      <Form.Control
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                        onBlur={formik.handleBlur}
-                        disabled={formik.isSubmitting}
-                        placeholder="username"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
-                        required
-                      />
-                    </FloatingLabel>
-                  </Form.Group>
-                  <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="password" label="Пароль">
-                      <Form.Control
-                        type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                        onBlur={formik.handleBlur}
-                        disabled={formik.isSubmitting}
-                        placeholder="password"
-                        name="password"
-                        id="password"
-                        autoComplete="current-password"
-                        required
-                      />
-                    </FloatingLabel>
-                    <Form.Control.Feedback type="invalid" className="invalid-feedback">не то</Form.Control.Feedback>
-                  </Form.Group>
-                  <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">Войти</Button>
-                </fieldset>
-              </Form>
-            </Card.Body>
-            <Card.Footer className="p-4">
+                <div className="form-floating mb-3">
+                  <input
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.username}
+                    className="form-control"
+                    type="text"
+                    name="username"
+                    autoComplete="username"
+                    placeholder="Ваш ник"
+                    id="username"
+                    required
+                  />
+                  <label htmlFor="username">Ваш ник</label>
+                </div>
+                <div className="form-floating mb-4">
+                  <input
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    className="form-control"
+                    type="password"
+                    name="password"
+                    autoComplete="password"
+                    placeholder="Пароль"
+                    id="password"
+                    required
+                  />
+                  <label htmlFor="password">Пароль</label>
+                </div>
+                <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+              </form>
+            </div>
+            <div className="card-footer p-4">
               <div className="text-center">
                 <span>Нет аккаунта?</span>
                 {' '}
-                <NavLink to="404">Регистрация</NavLink>
+                <NavLink to="*">Регистрация</NavLink>
               </div>
-            </Card.Footer>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
