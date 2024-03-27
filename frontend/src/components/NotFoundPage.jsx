@@ -1,4 +1,5 @@
 import img from '../assets/404.jpg';
+import getPath from '../routes.js';
 
 const NotFound = () => (
   <div className="text-center">
@@ -7,7 +8,7 @@ const NotFound = () => (
     <p className="text-muted">
       Но вы можете перейти
       {' '}
-      <a href="/">на главную страницу</a>
+      <a href={getPath.chatPage()}>на главную страницу</a>
     </p>
   </div>
 );

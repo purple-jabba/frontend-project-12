@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import img from '../assets/avatar.jpg';
+import getPath from '../routes.js';
 
 const LoginPage = () => {
   const formik = useFormik({
@@ -62,7 +63,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>Нет аккаунта?</span>
                 {' '}
-                <NavLink to="*">Регистрация</NavLink>
+                <NavLink to={getPath.notFoundPage()}>Регистрация</NavLink>
               </div>
             </div>
           </div>
