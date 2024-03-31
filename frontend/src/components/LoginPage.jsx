@@ -1,13 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { addLoginInfo } from '../slices/authSlice.js';
 import img from '../assets/avatar.jpg';
 import getPath from '../routes.js';
 
 const LoginPage = () => {
   const [loginFailed, setFailedLogin] = useState(false);
+  const dispatch = useDispatch();
   const inputEl = useRef();
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,7 +29,8 @@ const LoginPage = () => {
       setFailedLogin(false);
       try {
         const result = await axios.post(getPath.loginPath(), values);
-        localStorage.setItem('userToken', result.data.token);
+        const { data } = result;
+        dispatch(addLoginInfo({ data }));
         navigate(getPath.chatPage());
       } catch (error) {
         formik.setSubmitting(false);
@@ -83,7 +87,7 @@ const LoginPage = () => {
                     disabled={formik.isSubmitting}
                   />
                   <label htmlFor="password">Пароль</label>
-                  {loginFailed ? <div className="invalid-tooltip">Неверные имя пользователя или пароль</div> : ''}
+                  {loginFailed ? <div className="invalid-tooltip">Неверные имя пользователя или пароль</div> : null}
                 </div>
                 <button disabled={formik.isSubmitting} type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
               </form>
