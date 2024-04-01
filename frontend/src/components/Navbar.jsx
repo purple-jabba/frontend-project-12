@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import useAuth from '../hooks/hooks.js';
+import { useAuth } from '../hooks/hooks.js';
 import { logOut } from '../slices/authSlice.js';
 import getPath from '../routes.js';
 

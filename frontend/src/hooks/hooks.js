@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
 
-const useAuth = () => useSelector((state) => state.auth);
+export const useAuth = () => useSelector((state) => state.auth);
 
-export default useAuth;
+export const useSelectedChannel = () => useSelector((state) => state.selectedChannel);

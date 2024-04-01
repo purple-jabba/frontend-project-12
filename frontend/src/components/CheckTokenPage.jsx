@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import useAuth from '../hooks/hooks.js';
+import { useAuth } from '../hooks/hooks.js';
 import getPath from '../routes.js';
-import ChatPage from './ChatPage.jsx';
+import ChatPage from './chatComponents/ChatPage.jsx';
 
 const CheckTokenPage = () => {
   const auth = useAuth();
