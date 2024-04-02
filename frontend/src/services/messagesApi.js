@@ -14,11 +14,11 @@ export const messagesApi = createApi({
       }),
     }),
     addMessage: builder.mutation({
-      query: (newMessage, token) => ({
+      query: (newMessage) => ({
         method: 'POST',
-        body: newMessage,
+        body: newMessage.message,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${newMessage.token}`,
         },
       }),
     }),
