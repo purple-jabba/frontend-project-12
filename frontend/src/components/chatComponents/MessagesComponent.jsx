@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client';
 import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -13,18 +14,22 @@ const MessagesComponent = () => {
   const auth = useAuth();
   const messageRef = useRef();
   const messageEnd = useRef();
+  const socket = io();
 
   const vitalya = async () => {
     const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
     return response.status;
   };
-
   const {
     data,
     //  error,
     isLoading,
     refetch,
   } = useGetMessagesQuery(auth.token);
+
+  socket.on('newMessage', (payload) => {
+    console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+  });
 
   const [addMessage] = useAddMessageMutation();
 

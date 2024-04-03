@@ -1,4 +1,3 @@
-import { io } from 'socket.io-client';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import getPath from '../routes.js';
 
@@ -43,16 +42,6 @@ export const messagesApi = createApi({
       }),
     }),
   }),
-});
-
-const socket = io();
-
-socket.on('connect', () => {
-  console.log('connected to server');
-});
-
-socket.on('newMessage', (payload) => {
-  console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
 });
 
 export const {
