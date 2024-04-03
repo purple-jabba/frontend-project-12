@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
@@ -11,6 +11,7 @@ const MessagesComponent = () => {
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const messageRef = useRef();
+  const messageEnd = useRef();
 
   const {
     data,
@@ -19,9 +20,11 @@ const MessagesComponent = () => {
     refetch,
   } = useGetMessagesQuery(auth.token);
 
-  console.log(data);
-
   const [addMessage] = useAddMessageMutation();
+
+  useEffect(() => {
+    messageRef.current.focus();
+  }, [data]);
 
   const formik = useFormik({
     initialValues: {
@@ -43,24 +46,13 @@ const MessagesComponent = () => {
         addMessage(newMessagePost);
         refetch();
         formik.resetForm();
+        messageEnd.current?.scrollIntoView();
       } catch (e) {
         console.log(e);
         throw e;
       }
     },
   });
-
-  if (isLoading) {
-    return (
-      <div className="d-flex align-items-center justify-content-center">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
-  }
-
-  //  if (!isLoading) {
-  //    messageRef.current.focus();
-  //  }
 
   return (
     <div className="col p-0 h-100">
@@ -72,9 +64,10 @@ const MessagesComponent = () => {
           <span className="text-muted">Cообщения</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
-          { data
+          { isLoading ? null : data
             .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
             .map((message) => <Message key={message.id} message={message} />) }
+          <div ref={messageEnd} />
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={formik.handleSubmit} noValidate className="py-1 border rounded-2">
@@ -89,14 +82,14 @@ const MessagesComponent = () => {
                 placeholder="Введите сообщение..."
                 id="body"
                 required
-                disabled={formik.isSubmitting}
+                disabled={formik.isSubmitting || isLoading}
                 aria-label="Новое сообщение"
                 ref={messageRef}
               />
               <button
                 type="submit"
                 className="btn btn-group-vertical"
-                disabled={formik.isSubmitting || !formik.values.body}
+                disabled={formik.isSubmitting || !formik.values.body || isLoading}
               >
                 <ArrowRightSquare size={20} />
                 <span className="visually-hidden">Отправить</span>
