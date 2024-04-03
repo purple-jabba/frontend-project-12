@@ -1,9 +1,9 @@
-import { io } from 'socket.io-client';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import { WebSocketContext } from '../../context/webSocketContext.js';
 import { useSelectedChannel, useAuth } from '../../hooks/hooks.js';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../services/messagesApi.js';
 
@@ -14,7 +14,7 @@ const MessagesComponent = () => {
   const auth = useAuth();
   const messageRef = useRef();
   const messageEnd = useRef();
-  const socket = io();
+  const socket = useContext(WebSocketContext);
 
   const vitalya = async () => {
     const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
@@ -27,8 +27,8 @@ const MessagesComponent = () => {
     refetch,
   } = useGetMessagesQuery(auth.token);
 
-  socket.on('newMessage', (payload) => {
-    console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+  socket.on('newMessage', () => {
+    refetch();
   });
 
   const [addMessage] = useAddMessageMutation();
@@ -55,7 +55,6 @@ const MessagesComponent = () => {
           token: auth.token,
         };
         addMessage(newMessagePost);
-        refetch();
         formik.resetForm();
         messageEnd.current?.scrollIntoView();
       } catch (e) {
