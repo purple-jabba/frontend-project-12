@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store from './slices/index.js';
 import App from './components/App';
 import resources from './locales/index.js';
+import { socket, WebSocketContext } from './context/webSocketContext.js';
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -18,7 +19,9 @@ const init = async () => {
   return (
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <App />
+        <WebSocketContext.Provider value={socket}>
+          <App />
+        </WebSocketContext.Provider>
       </Provider>
     </I18nextProvider>
   );
