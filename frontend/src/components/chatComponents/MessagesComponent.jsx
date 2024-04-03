@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
+import axios from 'axios';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useSelectedChannel, useAuth } from '../../hooks/hooks.js';
@@ -12,6 +13,11 @@ const MessagesComponent = () => {
   const auth = useAuth();
   const messageRef = useRef();
   const messageEnd = useRef();
+
+  const vitalya = async () => {
+    const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
+    return response.status;
+  };
 
   const {
     data,
@@ -94,6 +100,7 @@ const MessagesComponent = () => {
                 <ArrowRightSquare size={20} />
                 <span className="visually-hidden">Отправить</span>
               </button>
+              <button onClick={() => vitalya()} type="button" className="w-100 mb-3 btn btn-outline-primary">vitalya</button>
             </div>
           </form>
         </div>
