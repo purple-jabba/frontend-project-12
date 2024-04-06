@@ -14,11 +14,11 @@ export const channelsApi = createApi({
       }),
     }),
     addChannel: builder.mutation({
-      query: (newChannel, token) => ({
+      query: (newChannel) => ({
         method: 'POST',
-        body: newChannel,
+        body: newChannel.body,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${newChannel.token}`,
         },
       }),
     }),
