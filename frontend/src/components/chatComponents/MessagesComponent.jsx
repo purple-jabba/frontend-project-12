@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { WebSocketContext } from '../../context/webSocketContext.js';
-import { useSelectedChannel, useAuth } from '../../hooks/hooks.js';
+import { useSelectedChannel, useAuth, useModal } from '../../hooks/hooks.js';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../services/messagesApi.js';
 
 import Message from './Message.jsx';
@@ -12,6 +12,7 @@ import Message from './Message.jsx';
 const MessagesComponent = () => {
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
+  const modal = useModal();
   const messageRef = useRef();
   const messageEnd = useRef();
   const socket = useContext(WebSocketContext);
@@ -20,6 +21,7 @@ const MessagesComponent = () => {
     const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
     return response.status;
   };
+
   const {
     data,
     //  error,
@@ -27,14 +29,20 @@ const MessagesComponent = () => {
     refetch,
   } = useGetMessagesQuery(auth.token);
 
+  const [addMessage] = useAddMessageMutation();
+
   socket.on('newMessage', () => {
     refetch();
   });
 
-  const [addMessage] = useAddMessageMutation();
+  useEffect(() => {
+    if (!modal.isOpen) {
+      messageRef.current.focus();
+    }
+  });
 
   useEffect(() => {
-    messageRef.current.focus();
+    messageEnd.current?.scrollIntoView();
   }, [data]);
 
   const formik = useFormik({
@@ -56,7 +64,6 @@ const MessagesComponent = () => {
         };
         addMessage(newMessagePost);
         formik.resetForm();
-        messageEnd.current?.scrollIntoView();
       } catch (e) {
         console.log(e);
         throw e;
@@ -71,7 +78,7 @@ const MessagesComponent = () => {
           <p className="m-0">
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
-          <span className="text-muted">Cообщения</span>
+          <span className="text-muted">{isLoading ? null : `${Object.keys(data).length} сообщений`}</span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
           { isLoading ? null : data
