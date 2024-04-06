@@ -12,3 +12,7 @@ socket.on('connect', () => {
 socket.on('newMessage', (payload) => {
   console.log(payload);
 });
+
+socket.on('newChannel', (payload) => {
+  console.log(payload);
+});
