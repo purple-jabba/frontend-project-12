@@ -12,8 +12,8 @@ export const messagesApi = createApi({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        providesTags: ['Channel'],
       }),
+      providesTags: ['Channel'],
     }),
     addMessage: builder.mutation({
       query: (newMessage) => ({

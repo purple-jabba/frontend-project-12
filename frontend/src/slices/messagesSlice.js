@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: [],
+  initialState: { data: [] },
   reducers: {
     addNewMesage: (state, { payload }) => {
-      state.push(payload);
+      state.data.push(payload);
     },
     clearMessageHistory: (state) => {
-      state.splice(0, state.length);
+      state.data = [];
     },
   },
 });

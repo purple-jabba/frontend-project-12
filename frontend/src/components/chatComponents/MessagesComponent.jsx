@@ -30,7 +30,7 @@ const MessagesComponent = () => {
     // refetch,
   } = useGetMessagesQuery(auth.token);
 
-  const newCurrentMessages = newMessages
+  const newCurrentMessages = newMessages.data
     .filter((message) => message.channelId === selectedChannel.currentChannelId.toString());
 
   const [addMessage] = useAddMessageMutation();
@@ -87,7 +87,7 @@ const MessagesComponent = () => {
           { isLoading ? null : data
             .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
             .map((message) => <Message key={message.id} message={message} />) }
-          {newMessages
+          {newMessages.data
             .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
             .map((message) => <Message key={message.id} message={message} />) }
           <div ref={messageEnd} />

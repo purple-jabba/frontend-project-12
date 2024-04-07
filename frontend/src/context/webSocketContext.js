@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { createContext } from 'react';
 import store from '../slices/index.js';
 import { addNewMesage } from '../slices/messagesSlice';
-import { addNewChannel } from '../slices/channelsSlice.js';
+import { addNewChannel, deleteChannel } from '../slices/channelsSlice.js';
 
 export const socket = io();
 
@@ -22,4 +22,9 @@ socket.on('newMessage', (payload) => {
 socket.on('newChannel', (payload) => {
   console.log(payload);
   dispatch(addNewChannel(payload));
+});
+
+socket.on('removeChannel', (payload) => {
+  console.log(payload);
+  dispatch(deleteChannel(payload));
 });

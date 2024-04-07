@@ -1,7 +1,9 @@
 import AddChannelComponent from './AddChannel.jsx';
+import RemoveChannelComponent from './RemoveChannel.jsx';
 
 const mapping = {
   addChannel: AddChannelComponent,
+  removeChannel: RemoveChannelComponent,
 };
 
 const getModal = (type) => mapping[type];

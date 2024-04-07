@@ -11,9 +11,13 @@ const selectChannelSlice = createSlice({
       state.currentChannelId = Number(data.id);
       state.currentChannelName = data.name;
     },
+    selectDefaultChannel: (state) => {
+      state.currentChannelId = defaultChannelId;
+      state.currentChannelName = defaultChannelName;
+    },
   },
 });
 
-export const { selectCurrentChannel } = selectChannelSlice.actions;
+export const { selectCurrentChannel, selectDefaultChannel } = selectChannelSlice.actions;
 
 export default selectChannelSlice.reducer;
