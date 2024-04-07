@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import getPath from '../routes.js';
 
-import NotFound from './NotFoundPage.jsx';
+import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import CheckTokenPage from './CheckTokenPage.jsx';
 import Navbar from './Navbar.jsx';
+import SignUpPage from './SignUpPage.jsx';
 
 const App = () => (
   <div className="h-100">
@@ -14,7 +15,8 @@ const App = () => (
         <Routes>
           <Route path={getPath.chatPage()} element={<CheckTokenPage />} />
           <Route path={getPath.loginPage()} element={<LoginPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={getPath.signUpPage()} element={<SignUpPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </div>
