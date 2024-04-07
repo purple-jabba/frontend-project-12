@@ -2,8 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import getPath from '../routes.js';
 
 export const channelsApi = createApi({
-  reducerPath: 'channels',
+  reducerPath: 'channelsApi',
   baseQuery: fetchBaseQuery({ baseUrl: getPath.channelsPath() }),
+  tagTypes: ['Channel'],
   endpoints: (builder) => ({
     getChannels: builder.query({
       query: (token) => ({
@@ -11,6 +12,7 @@ export const channelsApi = createApi({
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        providesTags: ['Channel'],
       }),
     }),
     addChannel: builder.mutation({
@@ -40,6 +42,7 @@ export const channelsApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ['Channel'],
     }),
   }),
 });
