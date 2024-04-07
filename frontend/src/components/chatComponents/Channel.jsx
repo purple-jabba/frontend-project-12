@@ -36,7 +36,7 @@ const Channel = ({ data }) => {
           <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removeChannel', id }))}>
             Удалить
           </Dropdown.Item>
-          <Dropdown.Item>
+          <Dropdown.Item onClick={() => dispatch(openModal({ type: 'renameChannel', id }))}>
             Переименовать
           </Dropdown.Item>
         </Dropdown.Menu>

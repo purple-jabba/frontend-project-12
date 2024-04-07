@@ -25,12 +25,12 @@ export const channelsApi = createApi({
       }),
     }),
     editChannel: builder.mutation({
-      query: (id, editedChannel, token) => ({
-        url: id,
+      query: (channel) => ({
+        url: channel.id,
         method: 'PATCH',
-        body: editedChannel,
+        body: channel.body,
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${channel.token}`,
         },
       }),
     }),

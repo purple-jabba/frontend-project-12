@@ -1,6 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { useModal, useAuth } from '../../../hooks/hooks';
+import { useModal, useAuth, useSelectedChannel } from '../../../hooks/hooks';
 import { selectDefaultChannel } from '../../../slices/selectChannelSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
@@ -8,6 +8,7 @@ import { useRemoveChannelMutation, useGetChannelsQuery } from '../../../services
 const RemoveChannelComponent = () => {
   const modal = useModal();
   const auth = useAuth();
+  const selectedChannel = useSelectedChannel();
   const dispatch = useDispatch();
 
   const [removeChannel] = useRemoveChannelMutation();
@@ -31,7 +32,9 @@ const RemoveChannelComponent = () => {
             onClick={() => {
               removeChannel(channel);
               refetch();
-              dispatch(selectDefaultChannel());
+              if (selectedChannel.currentChannelId.toString() === modal.id) {
+                dispatch(selectDefaultChannel());
+              }
               dispatch(closeModal());
             }}
           >
