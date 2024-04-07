@@ -7,9 +7,12 @@ const channelsSlice = createSlice({
     addNewChannel: (state, { payload }) => {
       state.push(payload);
     },
+    clearChannelHistory: (state) => {
+      state.splice(0, state.length);
+    },
   },
 });
 
-export const { addNewChannel } = channelsSlice.actions;
+export const { addNewChannel, clearChannelHistory } = channelsSlice.actions;
 
 export default channelsSlice.reducer;
