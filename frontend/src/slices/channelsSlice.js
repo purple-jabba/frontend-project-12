@@ -1,19 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const defaultChannelId = 1;
-const defaultChannelName = 'general';
-
-const selectChannelSlice = createSlice({
-  name: 'selectedChannel',
-  initialState: { currentChannelId: defaultChannelId, currentChannelName: defaultChannelName },
+const channelsSlice = createSlice({
+  name: 'channels',
+  initialState: [],
   reducers: {
-    selectCurrentChannel: (state, { payload: data }) => {
-      state.currentChannelId = Number(data.id);
-      state.currentChannelName = data.name;
+    addNewChannel: (state, { payload }) => {
+      state.push(payload);
     },
   },
 });
 
-export const { selectCurrentChannel } = selectChannelSlice.actions;
+export const { addNewChannel } = channelsSlice.actions;
 
-export default selectChannelSlice.reducer;
+export default channelsSlice.reducer;
