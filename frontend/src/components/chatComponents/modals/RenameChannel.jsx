@@ -3,7 +3,10 @@ import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useModal, useAuth, useChannels } from '../../../hooks/hooks';
+import {
+  useModal, useAuth, useChannels, useSelectedChannel,
+} from '../../../hooks/hooks';
+import { selectCurrentChannel } from '../../../slices/selectChannelSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
 import { clearChannelHistory } from '../../../slices/channelsSlice.js';
@@ -11,6 +14,7 @@ import { clearChannelHistory } from '../../../slices/channelsSlice.js';
 const RenameChannelComponent = () => {
   const modal = useModal();
   const auth = useAuth();
+  const selectedChannel = useSelectedChannel();
   const newChannels = useChannels();
   const dispatch = useDispatch();
   const addChannelRef = useRef();
@@ -48,6 +52,13 @@ const RenameChannelComponent = () => {
         };
         editChannel(newChannel);
         dispatch(closeModal());
+        if (selectedChannel.currentChannelId.toString() === modal.id) {
+          dispatch(
+            selectCurrentChannel(
+              { id: selectedChannel.currentChannelId, name: values.channelName },
+            ),
+          );
+        }
         if (!newChannelsIds.includes(modal.id)) {
           dispatch(clearChannelHistory());
           refetch();
