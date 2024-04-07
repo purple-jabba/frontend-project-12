@@ -1,7 +1,7 @@
 import { BsPlusSquare } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
-import { useAuth, useModal } from '../../hooks/hooks.js';
+import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
@@ -9,6 +9,7 @@ import { openModal } from '../../slices/modalSlice.js';
 const ChannelsComponent = () => {
   const auth = useAuth();
   const modal = useModal();
+  const newChannels = useChannels();
   const dispatch = useDispatch();
   const {
     data,
@@ -46,6 +47,7 @@ const ChannelsComponent = () => {
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {data.map((channel) => <Channel key={channel.id} data={channel} />)}
+        {newChannels.map((channel) => <Channel key={channel.id} data={channel} />)}
       </ul>
     </div>
   );

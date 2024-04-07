@@ -1,13 +1,12 @@
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useModal, useAuth } from '../../../hooks/hooks';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
-import { selectCurrentChannel } from '../../../slices/channelsSlice.js';
-import { WebSocketContext } from '../../../context/webSocketContext.js';
+import { selectCurrentChannel } from '../../../slices/selectChannelSlice.js';
 
 const AddChannelComponent = () => {
   const modal = useModal();
@@ -19,15 +18,9 @@ const AddChannelComponent = () => {
     addChannelRef.current.focus();
   }, []);
 
-  const socket = useContext(WebSocketContext);
-
-  const { data, refetch } = useGetChannelsQuery(auth.token);
+  const { data } = useGetChannelsQuery(auth.token);
 
   const [AddChannel] = useAddChannelMutation();
-
-  socket.on('newChannel', () => {
-    refetch();
-  });
 
   const channels = data.map((channel) => channel.name);
 

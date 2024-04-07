@@ -1,10 +1,11 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
-import { WebSocketContext } from '../../context/webSocketContext.js';
-import { useSelectedChannel, useAuth, useModal } from '../../hooks/hooks.js';
+import {
+  useSelectedChannel, useAuth, useModal, useMessages,
+} from '../../hooks/hooks.js';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../services/messagesApi.js';
 
 import Message from './Message.jsx';
@@ -13,9 +14,9 @@ const MessagesComponent = () => {
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const modal = useModal();
+  const newMessages = useMessages();
   const messageRef = useRef();
   const messageEnd = useRef();
-  const socket = useContext(WebSocketContext);
 
   const vitalya = async () => {
     const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
@@ -26,14 +27,10 @@ const MessagesComponent = () => {
     data,
     //  error,
     isLoading,
-    refetch,
+    // refetch,
   } = useGetMessagesQuery(auth.token);
 
   const [addMessage] = useAddMessageMutation();
-
-  socket.on('newMessage', () => {
-    refetch();
-  });
 
   useEffect(() => {
     if (!modal.isOpen) {
@@ -43,7 +40,7 @@ const MessagesComponent = () => {
 
   useEffect(() => {
     messageEnd.current?.scrollIntoView();
-  }, [data]);
+  }, [data, newMessages]);
 
   const formik = useFormik({
     initialValues: {
@@ -82,6 +79,9 @@ const MessagesComponent = () => {
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
           { isLoading ? null : data
+            .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
+            .map((message) => <Message key={message.id} message={message} />) }
+          {newMessages
             .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
             .map((message) => <Message key={message.id} message={message} />) }
           <div ref={messageEnd} />

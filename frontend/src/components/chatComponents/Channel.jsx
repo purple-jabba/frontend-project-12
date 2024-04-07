@@ -1,7 +1,7 @@
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useSelectedChannel } from '../../hooks/hooks.js';
-import { selectCurrentChannel } from '../../slices/channelsSlice.js';
+import { selectCurrentChannel } from '../../slices/selectChannelSlice.js';
 
 const Channel = ({ data }) => {
   const { id, name, removable } = data;
