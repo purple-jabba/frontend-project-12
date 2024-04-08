@@ -13,9 +13,11 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const inputEl = useRef();
   const navigate = useNavigate();
+
   useEffect(() => {
     inputEl.current.focus();
   }, [loginFailed]);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -28,7 +30,8 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setFailedLogin(false);
       try {
-        const result = await axios.post(getPath.loginPath(), values);
+        const { username, password } = values;
+        const result = await axios.post(getPath.loginPath(), { username, password });
         const { data } = result;
         dispatch(addLoginInfo({ data }));
         navigate(getPath.chatPage());
@@ -96,7 +99,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>Нет аккаунта?</span>
                 {' '}
-                <NavLink to={getPath.notFoundPage()}>Регистрация</NavLink>
+                <NavLink to={getPath.signUpPage()}>Регистрация</NavLink>
               </div>
             </div>
           </div>
