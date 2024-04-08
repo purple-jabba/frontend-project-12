@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import {
@@ -11,17 +11,13 @@ import { useGetMessagesQuery, useAddMessageMutation } from '../../services/messa
 import Message from './Message.jsx';
 
 const MessagesComponent = () => {
+  const { t } = useTranslation();
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const modal = useModal();
   const newMessages = useMessages();
   const messageRef = useRef();
   const messageEnd = useRef();
-
-  const vitalya = async () => {
-    const response = await axios.post('/api/v1/signup', { username: 'vitalya', password: 'vitalya' });
-    return response.status;
-  };
 
   const {
     data,
@@ -50,7 +46,7 @@ const MessagesComponent = () => {
       body: '',
     },
     validationSchema: yup.object({
-      body: yup.string().required(),
+      body: yup.string().required(t('yup.required')),
     }),
     onSubmit: async (values) => {
       try {
@@ -79,8 +75,7 @@ const MessagesComponent = () => {
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
           <span className="text-muted">
-            {isLoading ? null : `${data
-              .filter((message) => message.channelId === selectedChannel.currentChannelId.toString()).length + newCurrentMessages.length} сообщений`}
+            {isLoading ? null : t('chatComponents.messages', { count: data.filter((message) => message.channelId === selectedChannel.currentChannelId.toString()).length + newCurrentMessages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -102,11 +97,11 @@ const MessagesComponent = () => {
                 className="border-0 p-0 ps-2 form-control"
                 type="text"
                 name="body"
-                placeholder="Введите сообщение..."
+                placeholder={t('chatComponents.enterMessage')}
                 id="body"
                 required
                 disabled={formik.isSubmitting || isLoading}
-                aria-label="Новое сообщение"
+                aria-label={t('chatComponents.newMessage')}
                 ref={messageRef}
               />
               <button
@@ -115,9 +110,8 @@ const MessagesComponent = () => {
                 disabled={formik.isSubmitting || !formik.values.body || isLoading}
               >
                 <ArrowRightSquare size={20} />
-                <span className="visually-hidden">Отправить</span>
+                <span className="visually-hidden">{t('send')}</span>
               </button>
-              <button onClick={() => vitalya()} type="button" className="w-100 mb-3 btn btn-outline-primary">vitalya</button>
             </div>
           </form>
         </div>

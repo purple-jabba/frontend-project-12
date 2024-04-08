@@ -95,8 +95,8 @@ const RenameChannelComponent = () => {
               {formik.errors.channelName}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <Button className="me-2" variant="secondary" type="button" onClick={() => dispatch(closeModal())}>{t('modals.cancel')}</Button>
-              <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('modals.send')}</Button>
+              <Button className="me-2" variant="secondary" type="button" onClick={() => dispatch(closeModal())}>{t('cancel')}</Button>
+              <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('send')}</Button>
             </div>
           </Form.Group>
         </Form>

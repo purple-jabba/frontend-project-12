@@ -25,9 +25,9 @@ const RemoveChannelComponent = () => {
         <Modal.Title>{t('modals.deleteChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">{t('modals.sure')}</p>
+        <p className="lead">{t('sure')}</p>
         <div className="d-flex justify-content-end">
-          <Button variant="secondary" className="me-2" type="button" onClick={() => dispatch(closeModal())}>{t('modals.cancel')}</Button>
+          <Button variant="secondary" className="me-2" type="button" onClick={() => dispatch(closeModal())}>{t('cancel')}</Button>
           <Button
             variant="danger"
             type="button"
@@ -40,7 +40,7 @@ const RemoveChannelComponent = () => {
               dispatch(closeModal());
             }}
           >
-            {t('modals.delete')}
+            {t('delete')}
           </Button>
         </div>
       </Modal.Body>
