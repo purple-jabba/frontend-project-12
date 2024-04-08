@@ -4,11 +4,13 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { addLoginInfo, logOut } from '../slices/authSlice.js';
 import img from '../assets/avatar_1.jpg';
 import getPath from '../routes.js';
 
 const SignUpPage = () => {
+  const { t } = useTranslation();
   const [userExists, setExistUser] = useState(false);
   const dispatch = useDispatch();
   const inputEl = useRef();
@@ -27,20 +29,20 @@ const SignUpPage = () => {
     validationSchema: yup.object({
       username: yup
         .string()
-        .required('Обязательное поле')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
+        .required(t('yup.required'))
+        .min(3, t('yup.minAndMax'))
+        .max(20, t('yup.minAndMax'))
         .trim(),
       password: yup
         .string()
-        .required('Обязательное поле')
-        .min(6, 'Не менее 6 символов')
+        .required(t('yup.required'))
+        .min(6, t('yup.min'))
         .trim(),
       confirmPassword: yup
         .string()
         .test(
           'confirmPassword',
-          'Пароли должны совпадать',
+          t('yup.confirmPassword'),
           (password, context) => password === context.parent.password,
         ),
     }),
@@ -72,10 +74,10 @@ const SignUpPage = () => {
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img src={img} className="rounded-circle" alt="Регистрация" />
+                <img src={img} className="rounded-circle" alt={t('mainComponents.registration')} />
               </div>
               <form onSubmit={formik.handleSubmit} className="w-50" disabled={formik.isSubmitting}>
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t('mainComponents.registration')}</h1>
                 <div className="form-floating mb-3">
                   <input
                     onChange={formik.handleChange}
@@ -85,13 +87,13 @@ const SignUpPage = () => {
                     type="text"
                     name="username"
                     autoComplete="username"
-                    placeholder="Имя пользователя"
+                    placeholder={t('mainComponents.username')}
                     id="username"
                     required
                     disabled={formik.isSubmitting}
                     ref={inputEl}
                   />
-                  <label className="form-label" htmlFor="username">Имя пользователя</label>
+                  <label className="form-label" htmlFor="username">{t('mainComponents.username')}</label>
                   {formik.errors.username && formik.touched.username ? <div className="invalid-tooltip">{formik.errors.username}</div> : null}
                 </div>
                 <div className="form-floating mb-3">
@@ -103,12 +105,12 @@ const SignUpPage = () => {
                     type="password"
                     name="password"
                     autoComplete="password"
-                    placeholder="Пароль"
+                    placeholder={t('mainComponents.password')}
                     id="password"
                     required
                     disabled={formik.isSubmitting}
                   />
-                  <label className="form-label" htmlFor="password">Пароль</label>
+                  <label className="form-label" htmlFor="password">{t('mainComponents.password')}</label>
                   {formik.errors.password && formik.touched.password ? <div className="invalid-tooltip">{formik.errors.password}</div> : null}
                 </div>
                 <div className="form-floating mb-4">
@@ -120,16 +122,16 @@ const SignUpPage = () => {
                     type="password"
                     name="confirmPassword"
                     autoComplete="confirmPassword"
-                    placeholder="Подтвердите пароль"
+                    placeholder={t('mainComponents.confirmPassword')}
                     id="confirmPassword"
                     required
                     disabled={formik.isSubmitting}
                   />
-                  <label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</label>
+                  <label className="form-label" htmlFor="confirmPassword">{t('mainComponents.confirmPassword')}</label>
                   {formik.errors.confirmPassword && formik.touched.confirmPassword ? <div className="invalid-tooltip">{formik.errors.confirmPassword}</div> : null}
-                  {userExists ? <div className="invalid-tooltip">Такой пользователь уже существует</div> : null}
+                  {userExists ? <div className="invalid-tooltip">{t('mainComponents.alreadyHaveAccount')}</div> : null}
                 </div>
-                <button disabled={formik.isSubmitting} type="submit" className="w-100 mb-3 btn btn-outline-primary">Зарегистрироваться</button>
+                <button disabled={formik.isSubmitting} type="submit" className="w-100 mb-3 btn btn-outline-primary">{t('mainComponents.signUp')}</button>
               </form>
             </div>
           </div>

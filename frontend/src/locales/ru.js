@@ -1,5 +1,22 @@
 export default {
   translation: {
+    chatName: 'Project Chat',
+    mainComponents: {
+      login: 'Войти',
+      logout: 'Выйти',
+      notFound: 'Страница не найдена',
+      but: 'Но вы можете перейти',
+      toMainPage: 'на главную страницу',
+      failedLogin: 'Неверные имя пользователя или пароль',
+      noAccount: 'Нет аккаунта?',
+      registration: 'Регистрация',
+      signUp: 'Зарегистрироваться',
+      yourUserName: 'Ваш ник',
+      username: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      alreadyHaveAccount: 'Такой пользователь уже существует',
+    },
     chatComponents: {
       channels: 'Каналы',
       channelControls: 'Управление каналом',
@@ -16,8 +33,10 @@ export default {
     },
     yup: {
       required: 'Обязательное поле',
-      minAndMaxChannel: 'От 3 до 20 символов',
+      min: 'Не менее 6 символов',
+      minAndMax: 'От 3 до 20 символов',
       notOneOf: 'Должно быть уникальным',
+      confirmPassword: 'Пароли должны совпадать',
     },
     delete: 'Удалить',
     rename: 'Переименовать',

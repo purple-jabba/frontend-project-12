@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { addLoginInfo } from '../slices/authSlice.js';
 import img from '../assets/avatar.jpg';
 import getPath from '../routes.js';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const [loginFailed, setFailedLogin] = useState(false);
   const dispatch = useDispatch();
   const inputEl = useRef();
@@ -24,8 +26,8 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema: yup.object({
-      username: yup.string().required(),
-      password: yup.string().required(),
+      username: yup.string().required(t('yup.required')),
+      password: yup.string().required(t('yup.required')),
     }),
     onSubmit: async (values) => {
       setFailedLogin(false);
@@ -54,10 +56,10 @@ const LoginPage = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={img} className="rounded-circle" alt="Войти" />
+                <img src={img} className="rounded-circle" alt={t('mainComponents.login')} />
               </div>
               <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0" disabled={formik.isSubmitting}>
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('mainComponents.login')}</h1>
                 <div className="form-floating mb-3">
                   <input
                     onChange={formik.handleChange}
@@ -67,13 +69,13 @@ const LoginPage = () => {
                     type="text"
                     name="username"
                     autoComplete="username"
-                    placeholder="Ваш ник"
+                    placeholder={t('mainComponents.yourUserName')}
                     id="username"
                     required
                     disabled={formik.isSubmitting}
                     ref={inputEl}
                   />
-                  <label htmlFor="username">Ваш ник</label>
+                  <label htmlFor="username">{t('mainComponents.yourUserName')}</label>
                 </div>
                 <div className="form-floating mb-4">
                   <input
@@ -84,22 +86,22 @@ const LoginPage = () => {
                     type="password"
                     name="password"
                     autoComplete="password"
-                    placeholder="Пароль"
+                    placeholder={t('mainComponents.password')}
                     id="password"
                     required
                     disabled={formik.isSubmitting}
                   />
-                  <label htmlFor="password">Пароль</label>
-                  {loginFailed ? <div className="invalid-tooltip">Неверные имя пользователя или пароль</div> : null}
+                  <label htmlFor="password">{t('mainComponents.password')}</label>
+                  {loginFailed ? <div className="invalid-tooltip">{t('mainComponents.failedLogin')}</div> : null}
                 </div>
-                <button disabled={formik.isSubmitting} type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+                <button disabled={formik.isSubmitting} type="submit" className="w-100 mb-3 btn btn-outline-primary">{t('mainComponents.login')}</button>
               </form>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('mainComponents.noAccount')}</span>
                 {' '}
-                <NavLink to={getPath.signUpPage()}>Регистрация</NavLink>
+                <NavLink to={getPath.signUpPage()}>{t('mainComponents.registration')}</NavLink>
               </div>
             </div>
           </div>

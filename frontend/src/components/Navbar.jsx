@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/hooks.js';
 import { logOut } from '../slices/authSlice.js';
 import { clearMessageHistory } from '../slices/messagesSlice.js';
@@ -6,6 +7,7 @@ import { clearChannelHistory } from '../slices/channelsSlice.js';
 import getPath from '../routes.js';
 
 const LogOutButton = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const dispatch = useDispatch();
 
@@ -20,19 +22,23 @@ const LogOutButton = () => {
         className="btn btn-primary"
         type="button"
       >
-        Выйти
+        {t('mainComponents.logout')}
       </button>
     )
   );
 };
 
-const Navbar = () => (
-  <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-    <div className="container">
-      <a className="navbar-brand" href={getPath.chatPage()}>Project Chat</a>
-      <LogOutButton />
-    </div>
-  </nav>
-);
+const Navbar = () => {
+  const { t } = useTranslation();
+
+  return (
+    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+      <div className="container">
+        <a className="navbar-brand" href={getPath.chatPage()}>{t('chatName')}</a>
+        <LogOutButton />
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;
