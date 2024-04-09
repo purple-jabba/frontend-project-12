@@ -10,13 +10,4 @@ const mapping = {
 
 const getModal = (type) => mapping[type];
 
-const getModalComponent = (type) => {
-  if (!type) {
-    return null;
-  }
-
-  const ModalComponent = getModal(type);
-  return <ModalComponent />;
-};
-
-export default getModalComponent;
+export default getModal;

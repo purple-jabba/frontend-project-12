@@ -6,6 +6,7 @@ import store from './slices/index.js';
 import App from './components/App';
 import resources from './locales/index.js';
 import { socket, WebSocketContext } from './context/webSocketContext.js';
+import Modal from './components/chatComponents/modals/Modal.jsx';
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -25,6 +26,7 @@ const init = async () => {
       <Provider store={store}>
         <WebSocketContext.Provider value={socket}>
           <App />
+          <Modal />
         </WebSocketContext.Provider>
       </Provider>
     </I18nextProvider>
