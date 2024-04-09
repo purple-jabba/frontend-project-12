@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { addLoginInfo, logOut } from '../slices/authSlice.js';
 import img from '../assets/avatar_1.jpg';
 import getPath from '../routes.js';
@@ -61,7 +62,7 @@ const SignUpPage = () => {
           setExistUser(true);
           inputEl.current.select();
         } else {
-          throw error;
+          toast.error(t('toastify.connectionError'));
         }
       }
     },

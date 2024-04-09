@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import { toast } from 'react-toastify';
 import {
   useSelectedChannel, useAuth, useModal, useMessages,
 } from '../../hooks/hooks.js';
@@ -21,9 +22,8 @@ const MessagesComponent = () => {
 
   const {
     data,
-    //  error,
+    error,
     isLoading,
-    // refetch,
   } = useGetMessagesQuery(auth.token);
 
   const newCurrentMessages = newMessages.data
@@ -61,11 +61,19 @@ const MessagesComponent = () => {
         addMessage(newMessagePost);
         formik.resetForm();
       } catch (e) {
-        console.log(e);
-        throw e;
+        toast.error(t('toastify.loadingError'));
       }
     },
   });
+
+  if (error) {
+    toast.error(t('toastify.loadingError'));
+    return (
+      <div className="d-flex align-items-center justify-content-center">
+        <div className="spinner-border text-danger" role="status" />
+      </div>
+    );
+  }
 
   return (
     <div className="col p-0 h-100">

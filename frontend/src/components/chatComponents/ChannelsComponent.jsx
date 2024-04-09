@@ -1,6 +1,7 @@
 import { BsPlusSquare } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
 import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
 import Channel from './Channel.jsx';
@@ -28,6 +29,7 @@ const ChannelsComponent = () => {
   }
 
   if (error) {
+    toast.error(t('toastify.loadingError'));
     return (
       <div className="d-flex align-items-center justify-content-center">
         <div className="spinner-border text-danger" role="status" />

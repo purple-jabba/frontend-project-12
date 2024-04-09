@@ -15,6 +15,10 @@ socket.on('connect', () => {
   console.log('connected to server');
 });
 
+socket.on('connect_error', (err) => {
+  console.log(err.message);
+});
+
 socket.on('newMessage', (payload) => {
   console.log(payload);
   dispatch(addNewMesage(payload));

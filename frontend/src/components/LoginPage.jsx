@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { addLoginInfo } from '../slices/authSlice.js';
 import img from '../assets/avatar.jpg';
 import getPath from '../routes.js';
@@ -43,7 +44,7 @@ const LoginPage = () => {
           setFailedLogin(true);
           inputEl.current.select();
         } else {
-          throw error;
+          toast.error(t('toastify.connectionError'));
         }
       }
     },
