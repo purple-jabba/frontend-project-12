@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import {
   useModal, useAuth, useChannels, useSelectedChannel,
 } from '../../../hooks/hooks';
@@ -65,9 +66,9 @@ const RenameChannelComponent = () => {
           dispatch(clearChannelHistory());
           refetch();
         }
+        toast.success(t('toastify.renameChannel'));
       } catch (e) {
-        console.log(e);
-        throw e;
+        toast.error(t('toastify.loadingError'));
       }
     },
   });

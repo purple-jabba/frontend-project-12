@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useModal, useAuth, useChannels } from '../../../hooks/hooks';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
@@ -49,9 +50,9 @@ const AddChannelComponent = () => {
         const response = await AddChannel(newChannel);
         dispatch(closeModal());
         dispatch(selectCurrentChannel({ id: response.data.id, name: response.data.name }));
+        toast.success(t('toastify.addChannel'));
       } catch (e) {
-        console.log(e);
-        throw e;
+        toast.error(t('toastify.loadingError'));
       }
     },
   });

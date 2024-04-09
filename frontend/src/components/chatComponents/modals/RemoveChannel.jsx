@@ -1,10 +1,11 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useModal, useAuth, useSelectedChannel } from '../../../hooks/hooks';
 import { selectDefaultChannel } from '../../../slices/selectChannelSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
-import { useRemoveChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
+import { useRemoveChannelMutation } from '../../../services/channelsApi.js';
 
 const RemoveChannelComponent = () => {
   const { t } = useTranslation();
@@ -15,9 +16,23 @@ const RemoveChannelComponent = () => {
 
   const [removeChannel] = useRemoveChannelMutation();
 
-  const { refetch } = useGetChannelsQuery(auth.token);
-
   const channel = { id: modal.id, token: auth.token };
+
+  const removeChannelFunc = async (event) => {
+    event.preventDefault();
+    await removeChannel(channel)
+      .then(() => {
+        if (selectedChannel.currentChannelId.toString() === modal.id) {
+          dispatch(selectDefaultChannel());
+        }
+        dispatch(closeModal());
+        toast.success(t('toastify.removeChannel'));
+      })
+      .catch((e) => {
+        toast.error(t('toastify.loadingError'));
+        console.log(e);
+      });
+  };
 
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
@@ -31,14 +46,7 @@ const RemoveChannelComponent = () => {
           <Button
             variant="danger"
             type="button"
-            onClick={() => {
-              removeChannel(channel);
-              refetch();
-              if (selectedChannel.currentChannelId.toString() === modal.id) {
-                dispatch(selectDefaultChannel());
-              }
-              dispatch(closeModal());
-            }}
+            onClick={removeChannelFunc}
           >
             {t('delete')}
           </Button>

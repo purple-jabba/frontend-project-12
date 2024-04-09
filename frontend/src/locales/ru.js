@@ -38,6 +38,13 @@ export default {
       notOneOf: 'Должно быть уникальным',
       confirmPassword: 'Пароли должны совпадать',
     },
+    toastify: {
+      addChannel: 'Канал создан',
+      removeChannel: 'Канал удален',
+      renameChannel: 'Канал переименован',
+      connectionError: 'Ошибка сети',
+      loadingError: 'Ошибка загрузки данных',
+    },
     delete: 'Удалить',
     rename: 'Переименовать',
     cancel: 'Отменить',

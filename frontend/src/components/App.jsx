@@ -1,4 +1,7 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import getPath from '../routes.js';
 
 import NotFoundPage from './NotFoundPage.jsx';
@@ -20,6 +23,18 @@ const App = () => (
         </Routes>
       </Router>
     </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </div>
 );
 
