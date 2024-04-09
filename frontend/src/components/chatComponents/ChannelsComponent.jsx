@@ -49,7 +49,12 @@ const ChannelsComponent = () => {
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {data.map((channel) => <Channel key={channel.id} data={channel} />)}
-        {newChannels.data.map((channel) => <Channel key={channel.id} data={channel} />)}
+        {newChannels.data
+          .filter((channel) => {
+            const dataIds = data.map((dataEl) => dataEl.id);
+            return !dataIds.includes(channel.id);
+          })
+          .map((channel) => <Channel key={channel.id} data={channel} />)}
       </ul>
     </div>
   );

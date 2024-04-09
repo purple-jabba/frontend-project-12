@@ -18,8 +18,7 @@ const RemoveChannelComponent = () => {
 
   const channel = { id: modal.id, token: auth.token };
 
-  const removeChannelFunc = async (event) => {
-    event.preventDefault();
+  const removeChannelFunc = async () => {
     await removeChannel(channel)
       .then(() => {
         if (selectedChannel.currentChannelId.toString() === modal.id) {
