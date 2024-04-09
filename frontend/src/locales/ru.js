@@ -30,6 +30,7 @@ export default {
       addChannel: 'Добавить канал',
       deleteChannel: 'Удалить канал',
       renameChannel: 'Переименовать канал',
+      channelName: 'Имя канала',
     },
     yup: {
       required: 'Обязательное поле',
