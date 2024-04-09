@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { useModal, useAuth, useChannels } from '../../../hooks/hooks';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
@@ -43,8 +44,9 @@ const AddChannelComponent = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const clearedName = leoProfanity.clean(values.channelName);
         const newChannel = {
-          body: { name: values.channelName },
+          body: { name: clearedName },
           token: auth.token,
         };
         const response = await AddChannel(newChannel);

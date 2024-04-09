@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import {
   useSelectedChannel, useAuth, useModal, useMessages,
 } from '../../hooks/hooks.js';
@@ -50,9 +51,10 @@ const MessagesComponent = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const clearedMessage = leoProfanity.clean(values.body);
         const newMessagePost = {
           message: {
-            body: values.body,
+            body: clearedMessage,
             channelId: selectedChannel.currentChannelId.toString(),
             username: auth.username,
           },

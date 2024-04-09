@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import leoProfanity from 'leo-profanity';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import store from './slices/index.js';
@@ -15,6 +16,9 @@ const init = async () => {
       resources,
       fallbackLng: 'ru',
     });
+
+  const russianDictionary = leoProfanity.getDictionary('ru');
+  leoProfanity.add(russianDictionary);
 
   return (
     <I18nextProvider i18n={i18n}>
