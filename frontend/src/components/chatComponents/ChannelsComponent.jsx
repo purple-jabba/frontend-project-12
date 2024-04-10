@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { BsPlusSquare } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
 import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
+import { addPrimaryData } from '../../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
@@ -19,6 +21,12 @@ const ChannelsComponent = () => {
     error,
     isLoading,
   } = useGetChannelsQuery(auth.token);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(addPrimaryData(data));
+    }
+  }, [isLoading, data, dispatch]);
 
   if (isLoading) {
     return (
@@ -48,7 +56,7 @@ const ChannelsComponent = () => {
         </button>
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-        {data.map((channel) => <Channel key={channel.id} data={channel} />)}
+        {newChannels.primaryData.map((channel) => <Channel key={channel.id} data={channel} />)}
         {newChannels.data
           .filter((channel) => {
             const dataIds = data.map((dataEl) => dataEl.id);
