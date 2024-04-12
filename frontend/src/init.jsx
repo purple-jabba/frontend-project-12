@@ -23,12 +23,14 @@ const init = async () => {
   leoProfanity.add(russianDictionary);
 
   const rollbarConfiguration = {
-    accessToken: 'POST_CLIENT_ITEM_ACCESS_TOKEN',
-    captureUncaught: true,
-    payload: {
-      environment: 'production',
-    },
+    accessToken: 'ROLLBAR_ACCESS_TOKEN',
+    environment: 'testenv',
   };
+
+  function TestError() {
+    const a = null;
+    return a.hello();
+  }
 
   return (
     <RollBar config={rollbarConfiguration}>
@@ -36,6 +38,7 @@ const init = async () => {
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <WebSocketContext.Provider value={socket}>
+              <TestError />
               <App />
               <Modal />
             </WebSocketContext.Provider>
