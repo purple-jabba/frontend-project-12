@@ -27,8 +27,6 @@ const init = async () => {
     environment: 'production',
   };
 
-  console.log(process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN);
-
   function TestError() {
     const a = null;
     return a.hello();
