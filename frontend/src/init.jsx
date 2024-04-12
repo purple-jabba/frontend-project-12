@@ -27,18 +27,12 @@ const init = async () => {
     environment: 'production',
   };
 
-  function TestError() {
-    const a = null;
-    return a.hello();
-  }
-
   return (
     <RollBar config={rollbarConfiguration}>
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <WebSocketContext.Provider value={socket}>
-              <TestError />
               <App />
               <Modal />
             </WebSocketContext.Provider>
