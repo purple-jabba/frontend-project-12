@@ -25,7 +25,10 @@ jobs:
           cache: 'npm'
       - run: make install
       - run: make lint-frontend
-      - run: |
+      - name: 'Create env file'
+        run: |
           touch .env
           echo ROLLBAR_ACCESS_TOKEN=${{ secrets.ROLLBAR_ACCESS_TOKEN }} >> .env
           cat .env
+        env: 
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
