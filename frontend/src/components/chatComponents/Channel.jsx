@@ -16,9 +16,7 @@ const Channel = ({ data }) => {
   const selectChannel = async (channel) => {
     const messageEnd = document.getElementById('messageEnd');
     await dispatch(selectCurrentChannel(channel));
-    messageEnd.scrollIntoView({
-      behavior: 'smooth',
-    });
+    messageEnd.scrollIntoView();
   };
 
   if (!removable) {
