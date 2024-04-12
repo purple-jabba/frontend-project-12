@@ -23,9 +23,11 @@ const init = async () => {
   leoProfanity.add(russianDictionary);
 
   const rollbarConfiguration = {
-    accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-    environment: 'testenv',
+    accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+    environment: 'production',
   };
+
+  console.log(process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN);
 
   function TestError() {
     const a = null;
