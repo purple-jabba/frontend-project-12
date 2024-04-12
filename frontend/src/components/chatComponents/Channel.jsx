@@ -12,10 +12,19 @@ const Channel = ({ data }) => {
   const modal = useModal();
   const selectedChannel = useSelectedChannel();
   const dispatch = useDispatch();
+
+  const selectChannel = async (channel) => {
+    const messageEnd = document.getElementById('messageEnd');
+    await dispatch(selectCurrentChannel(channel));
+    messageEnd.scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
+
   if (!removable) {
     return (
       <li id={id} className="nav-item w-100">
-        <button onClick={() => dispatch(selectCurrentChannel(data))} type="button" className={Number(id) !== selectedChannel.currentChannelId ? 'w-100 rounded-0 text-start btn' : 'w-100 rounded-0 text-start btn btn-secondary'}>
+        <button onClick={() => selectChannel(data)} type="button" className={Number(id) !== selectedChannel.currentChannelId ? 'w-100 rounded-0 text-start btn' : 'w-100 rounded-0 text-start btn btn-secondary'}>
           <span className="me-1">#</span>
           {name}
         </button>
@@ -27,7 +36,7 @@ const Channel = ({ data }) => {
     <li id={id} className="nav-item w-100">
       {getModalComponent(modal.type)}
       <Dropdown className="d-flex btn-group" as={ButtonGroup}>
-        <button onClick={() => dispatch(selectCurrentChannel(data))} className={Number(id) !== selectedChannel.currentChannelId ? 'w-100 rounded-0 text-start text-truncate btn' : 'w-100 rounded-0 text-start text-truncate btn btn-secondary'} type="button">
+        <button onClick={() => selectChannel(data)} className={Number(id) !== selectedChannel.currentChannelId ? 'w-100 rounded-0 text-start text-truncate btn' : 'w-100 rounded-0 text-start text-truncate btn btn-secondary'} type="button">
           <span className="me-1">#</span>
           {name}
         </button>

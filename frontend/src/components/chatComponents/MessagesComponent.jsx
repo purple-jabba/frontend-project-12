@@ -95,7 +95,7 @@ const MessagesComponent = () => {
           {newMessages.data
             .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
             .map((message) => <Message key={message.id} message={message} />) }
-          <div ref={messageEnd} />
+          <div id="messageEnd" ref={messageEnd} />
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={formik.handleSubmit} noValidate className="py-1 border rounded-2">
