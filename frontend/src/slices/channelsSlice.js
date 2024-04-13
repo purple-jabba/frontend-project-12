@@ -34,7 +34,7 @@ const channelsSlice = createSlice({
         return channel;
       });
     },
-    addData: (state, { payload }) => {
+    addChannelData: (state, { payload }) => {
       state.data = [...payload];
     },
     selectCurrentChannel: (state, { payload: data }) => {
@@ -50,7 +50,7 @@ const channelsSlice = createSlice({
 
 export const {
   addNewChannel,
-  addData,
+  addChannelData,
   clearChannelHistory,
   deleteChannel,
   renameChannel,

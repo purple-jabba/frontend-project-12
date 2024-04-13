@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
 import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
-import { addData } from '../../slices/channelsSlice.js';
+import { addChannelData } from '../../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
@@ -24,7 +24,7 @@ const ChannelsComponent = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(addData(data));
+      dispatch(addChannelData(data));
     }
   }, [isLoading, data, dispatch]);
 

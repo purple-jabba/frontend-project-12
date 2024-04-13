@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -9,15 +10,17 @@ import {
   useSelectedChannel, useAuth, useModal, useMessages,
 } from '../../hooks/hooks.js';
 import { useGetMessagesQuery, useAddMessageMutation } from '../../services/messagesApi.js';
+import { addMessageData } from '../../slices/messagesSlice.js';
 
 import Message from './Message.jsx';
 
 const MessagesComponent = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const modal = useModal();
-  const newMessages = useMessages();
+  const messages = useMessages();
   const messageRef = useRef();
   const messageEnd = useRef();
 
@@ -27,7 +30,13 @@ const MessagesComponent = () => {
     isLoading,
   } = useGetMessagesQuery(auth.token);
 
-  const newCurrentMessages = newMessages.data
+  useEffect(() => {
+    if (data) {
+      dispatch(addMessageData(data));
+    }
+  }, [isLoading, data, dispatch]);
+
+  const currentMessages = messages.data
     .filter((message) => message.channelId === selectedChannel.currentChannelId.toString());
 
   const [addMessage] = useAddMessageMutation();
@@ -40,7 +49,7 @@ const MessagesComponent = () => {
 
   useEffect(() => {
     messageEnd.current?.scrollIntoView();
-  }, [data, newMessages]);
+  }, [data, currentMessages]);
 
   const formik = useFormik({
     initialValues: {
@@ -85,15 +94,11 @@ const MessagesComponent = () => {
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
           <span className="text-muted">
-            {isLoading ? null : t('chatComponents.messages', { count: data.filter((message) => message.channelId === selectedChannel.currentChannelId.toString()).length + newCurrentMessages.length })}
+            {isLoading ? null : t('chatComponents.messages', { count: currentMessages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
-          { isLoading ? null : data
-            .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
-            .map((message) => <Message key={message.id} message={message} />) }
-          {newMessages.data
-            .filter((message) => message.channelId === selectedChannel.currentChannelId.toString())
+          { isLoading ? null : currentMessages
             .map((message) => <Message key={message.id} message={message} />) }
           <div id="messageEnd" ref={messageEnd} />
         </div>
