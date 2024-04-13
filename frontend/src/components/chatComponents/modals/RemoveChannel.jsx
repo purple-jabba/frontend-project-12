@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useModal, useAuth, useSelectedChannel } from '../../../hooks/hooks';
-import { selectDefaultChannel } from '../../../slices/selectChannelSlice.js';
+import { selectDefaultChannel } from '../../../slices/channelsSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useRemoveChannelMutation } from '../../../services/channelsApi.js';
 

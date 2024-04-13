@@ -2,8 +2,9 @@ import { io } from 'socket.io-client';
 import { createContext } from 'react';
 import store from '../slices/index.js';
 import { addNewMesage } from '../slices/messagesSlice';
-import { addNewChannel, deleteChannel, renameChannel } from '../slices/channelsSlice.js';
-import { selectCurrentChannel, selectDefaultChannel } from '../slices/selectChannelSlice.js';
+import {
+  addNewChannel, deleteChannel, renameChannel, selectCurrentChannel, selectDefaultChannel,
+} from '../slices/channelsSlice.js';
 
 export const socket = io();
 
@@ -31,8 +32,8 @@ socket.on('newChannel', (payload) => {
 
 socket.on('removeChannel', (payload) => {
   console.log(payload);
-  const { selectedChannel } = store.getState();
-  if (selectedChannel.currentChannelId.toString() === payload.id) {
+  const { channels } = store.getState();
+  if (channels.selectedChannel.currentChannelId.toString() === payload.id) {
     dispatch(selectDefaultChannel());
   }
   dispatch(deleteChannel(payload));
@@ -40,9 +41,11 @@ socket.on('removeChannel', (payload) => {
 
 socket.on('renameChannel', (payload) => {
   console.log(payload);
-  const { selectedChannel } = store.getState();
-  if (selectedChannel.currentChannelId.toString() === payload.id) {
-    dispatch(selectCurrentChannel({ id: selectedChannel.currentChannelId, name: payload.name }));
+  const { channels } = store.getState();
+  if (channels.selectedChannel.currentChannelId.toString() === payload.id) {
+    dispatch(
+      selectCurrentChannel({ id: channels.selectedChannel.currentChannelId, name: payload.name }),
+    );
   }
   dispatch(renameChannel(payload));
 });

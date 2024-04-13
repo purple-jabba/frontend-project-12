@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { channelsApi } from '../services/channelsApi.js';
 import { messagesApi } from '../services/messagesApi.js';
 import authSliceReducer from './authSlice.js';
-import selectChannelSlice from './selectChannelSlice.js';
 import channelsSliceReducer from './channelsSlice.js';
 import messagesSliceReducer from './messagesSlice.js';
 import modalSliceReducer from './modalSlice.js';
@@ -10,7 +9,6 @@ import modalSliceReducer from './modalSlice.js';
 export default configureStore({
   reducer: {
     auth: authSliceReducer,
-    selectedChannel: selectChannelSlice,
     modal: modalSliceReducer,
     messages: messagesSliceReducer,
     channels: channelsSliceReducer,

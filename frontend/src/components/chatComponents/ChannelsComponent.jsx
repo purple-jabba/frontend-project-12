@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
 import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
-import { addPrimaryData } from '../../slices/channelsSlice.js';
+import { addData } from '../../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
@@ -14,7 +14,7 @@ const ChannelsComponent = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   const modal = useModal();
-  const newChannels = useChannels();
+  const channels = useChannels();
   const dispatch = useDispatch();
   const {
     data,
@@ -24,7 +24,7 @@ const ChannelsComponent = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(addPrimaryData(data));
+      dispatch(addData(data));
     }
   }, [isLoading, data, dispatch]);
 
@@ -56,13 +56,7 @@ const ChannelsComponent = () => {
         </button>
       </div>
       <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-        {newChannels.primaryData.map((channel) => <Channel key={channel.id} data={channel} />)}
-        {newChannels.data
-          .filter((channel) => {
-            const dataIds = data.map((dataEl) => dataEl.id);
-            return !dataIds.includes(channel.id);
-          })
-          .map((channel) => <Channel key={channel.id} data={channel} />)}
+        {channels.data.map((channel) => <Channel key={channel.id} data={channel} />)}
       </ul>
     </div>
   );

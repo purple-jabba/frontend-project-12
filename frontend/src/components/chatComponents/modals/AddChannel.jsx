@@ -9,7 +9,7 @@ import leoProfanity from 'leo-profanity';
 import { useModal, useAuth, useChannels } from '../../../hooks/hooks';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
-import { selectCurrentChannel } from '../../../slices/selectChannelSlice.js';
+import { selectCurrentChannel } from '../../../slices/channelsSlice.js';
 
 const AddChannelComponent = () => {
   const { t } = useTranslation();

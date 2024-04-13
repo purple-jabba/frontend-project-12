@@ -2,7 +2,7 @@ import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useSelectedChannel, useModal } from '../../hooks/hooks.js';
-import { selectCurrentChannel } from '../../slices/selectChannelSlice.js';
+import { selectCurrentChannel } from '../../slices/channelsSlice.js';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
 

@@ -2,28 +2,31 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
+const defaultChannelId = 1;
+const defaultChannelName = 'general';
+
+const initialState = {
+  data: [],
+  selectedChannel: {
+    currentChannelId: defaultChannelId,
+    currentChannelName: defaultChannelName,
+  },
+};
+
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: { primaryData: [], data: [] },
+  initialState,
   reducers: {
     addNewChannel: (state, { payload }) => {
       state.data.push(payload);
     },
     clearChannelHistory: (state) => {
       state.data = [];
-      state.primaryData = [];
     },
     deleteChannel: (state, { payload }) => {
       state.data = state.data.filter((channel) => channel.id !== payload.id);
-      state.primaryData = state.primaryData.filter((channel) => channel.id !== payload.id);
     },
     renameChannel: (state, { payload }) => {
-      state.primaryData = state.primaryData.map((channel) => {
-        if (channel.id === payload.id) {
-          return payload;
-        }
-        return channel;
-      });
       state.data = state.data.map((channel) => {
         if (channel.id === payload.id) {
           return payload;
@@ -31,14 +34,28 @@ const channelsSlice = createSlice({
         return channel;
       });
     },
-    addPrimaryData: (state, { payload }) => {
-      state.primaryData = [...payload];
+    addData: (state, { payload }) => {
+      state.data = [...payload];
+    },
+    selectCurrentChannel: (state, { payload: data }) => {
+      state.selectedChannel.currentChannelId = Number(data.id);
+      state.selectedChannel.currentChannelName = data.name;
+    },
+    selectDefaultChannel: (state) => {
+      state.selectedChannel.currentChannelId = defaultChannelId;
+      state.selectedChannel.currentChannelName = defaultChannelName;
     },
   },
 });
 
 export const {
-  addNewChannel, addPrimaryData, clearChannelHistory, deleteChannel, renameChannel,
+  addNewChannel,
+  addData,
+  clearChannelHistory,
+  deleteChannel,
+  renameChannel,
+  selectCurrentChannel,
+  selectDefaultChannel,
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;
