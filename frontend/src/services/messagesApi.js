@@ -3,15 +3,22 @@ import getPath from '../routes.js';
 
 export const messagesApi = createApi({
   reducerPath: 'messagesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: getPath.messagesPath() }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: getPath.messagesPath(),
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState();
+      const { token } = state.auth;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ['Channel'],
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: (token) => ({
+      query: () => ({
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
       providesTags: ['Channel'],
     }),
@@ -19,9 +26,6 @@ export const messagesApi = createApi({
       query: (newMessage) => ({
         method: 'POST',
         body: newMessage.message,
-        headers: {
-          Authorization: `Bearer ${newMessage.token}`,
-        },
       }),
     }),
   }),

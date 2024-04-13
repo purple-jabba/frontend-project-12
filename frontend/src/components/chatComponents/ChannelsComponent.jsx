@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
-import { useAuth, useModal, useChannels } from '../../hooks/hooks.js';
+import { useModal, useChannels } from '../../hooks/hooks.js';
 import { addChannelData } from '../../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
@@ -12,7 +12,6 @@ import { openModal } from '../../slices/modalSlice.js';
 
 const ChannelsComponent = () => {
   const { t } = useTranslation();
-  const auth = useAuth();
   const modal = useModal();
   const channels = useChannels();
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ const ChannelsComponent = () => {
     data,
     error,
     isLoading,
-  } = useGetChannelsQuery(auth.token);
+  } = useGetChannelsQuery();
 
   useEffect(() => {
     if (data) {

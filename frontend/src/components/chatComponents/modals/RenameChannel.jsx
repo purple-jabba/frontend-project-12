@@ -7,18 +7,17 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import {
-  useModal, useAuth, useChannels, useSelectedChannel,
+  useModal, useChannels, useSelectedChannel,
 } from '../../../hooks/hooks';
 import { selectCurrentChannel } from '../../../slices/channelsSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
-import { useEditChannelMutation, useGetChannelsQuery } from '../../../services/channelsApi.js';
+import { useEditChannelMutation } from '../../../services/channelsApi.js';
 
 const RenameChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
-  const auth = useAuth();
   const selectedChannel = useSelectedChannel();
-  const newChannels = useChannels();
+  const channels = useChannels();
   const dispatch = useDispatch();
   const addChannelRef = useRef();
 
@@ -26,12 +25,9 @@ const RenameChannelComponent = () => {
     addChannelRef.current.focus();
   }, []);
 
-  const { data } = useGetChannelsQuery(auth.token);
-
   const [editChannel] = useEditChannelMutation();
 
-  const channelsNames = data.map((channel) => channel.name);
-  const newChannelsNames = newChannels.data.map((channel) => channel.name);
+  const channelsNames = channels.data.map((channel) => channel.name);
 
   const formik = useFormik({
     initialValues: {
@@ -43,7 +39,7 @@ const RenameChannelComponent = () => {
         .required(t('yup.required'))
         .min(3, t('yup.minAndMax'))
         .max(20, t('yup.minAndMax'))
-        .notOneOf([...channelsNames, ...newChannelsNames], t('yup.notOneOf')),
+        .notOneOf([...channelsNames], t('yup.notOneOf')),
     }),
     onSubmit: async (values) => {
       try {
@@ -51,7 +47,6 @@ const RenameChannelComponent = () => {
         const newChannel = {
           id: modal.id,
           body: { name: clearedName },
-          token: auth.token,
         };
         editChannel(newChannel);
         dispatch(closeModal());

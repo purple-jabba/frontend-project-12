@@ -3,15 +3,22 @@ import getPath from '../routes.js';
 
 export const channelsApi = createApi({
   reducerPath: 'channelsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: getPath.channelsPath() }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: getPath.channelsPath(),
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState();
+      const { token } = state.auth;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ['Channel'],
   endpoints: (builder) => ({
     getChannels: builder.query({
-      query: (token) => ({
+      query: () => ({
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
       providesTags: ['Channel'],
     }),
@@ -19,9 +26,6 @@ export const channelsApi = createApi({
       query: (newChannel) => ({
         method: 'POST',
         body: newChannel.body,
-        headers: {
-          Authorization: `Bearer ${newChannel.token}`,
-        },
       }),
     }),
     editChannel: builder.mutation({
@@ -29,9 +33,6 @@ export const channelsApi = createApi({
         url: channel.id,
         method: 'PATCH',
         body: channel.body,
-        headers: {
-          Authorization: `Bearer ${channel.token}`,
-        },
       }),
       invalidatesTags: ['Channel'],
     }),
@@ -39,9 +40,6 @@ export const channelsApi = createApi({
       query: (channel) => ({
         url: channel.id,
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${channel.token}`,
-        },
       }),
       invalidatesTags: ['Channel'],
     }),
