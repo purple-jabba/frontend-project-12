@@ -6,11 +6,16 @@ import { Provider as RollBar, ErrorBoundary } from '@rollbar/react';
 import store from './slices/index.js';
 import App from './components/App';
 import resources from './locales/index.js';
-import { socket, WebSocketContext } from './context/webSocketContext.js';
+import socket from './socket.js';
 import Modal from './components/chatComponents/modals/Modal.jsx';
+import { addNewMesage } from './slices/messagesSlice';
+import {
+  addNewChannel, deleteChannel, renameChannel, selectCurrentChannel, selectDefaultChannel,
+} from './slices/channelsSlice.js';
 
 const init = async () => {
   const i18n = i18next.createInstance();
+  const { dispatch } = store;
 
   await i18n
     .use(initReactI18next)
@@ -18,6 +23,32 @@ const init = async () => {
       resources,
       fallbackLng: 'ru',
     });
+
+  socket.on('newMessage', (payload) => {
+    dispatch(addNewMesage(payload));
+  });
+
+  socket.on('newChannel', (payload) => {
+    dispatch(addNewChannel(payload));
+  });
+
+  socket.on('removeChannel', (payload) => {
+    const { channels } = store.getState();
+    if (channels.selectedChannel.currentChannelId.toString() === payload.id) {
+      dispatch(selectDefaultChannel());
+    }
+    dispatch(deleteChannel(payload));
+  });
+
+  socket.on('renameChannel', (payload) => {
+    const { channels } = store.getState();
+    if (channels.selectedChannel.currentChannelId.toString() === payload.id) {
+      dispatch(
+        selectCurrentChannel({ id: channels.selectedChannel.currentChannelId, name: payload.name }),
+      );
+    }
+    dispatch(renameChannel(payload));
+  });
 
   const russianDictionary = leoProfanity.getDictionary('ru');
   leoProfanity.add(russianDictionary);
@@ -32,10 +63,8 @@ const init = async () => {
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
-            <WebSocketContext.Provider value={socket}>
-              <App />
-              <Modal />
-            </WebSocketContext.Provider>
+            <App />
+            <Modal />
           </Provider>
         </I18nextProvider>
       </ErrorBoundary>
