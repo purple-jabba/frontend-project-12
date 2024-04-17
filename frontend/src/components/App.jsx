@@ -19,7 +19,7 @@ const App = () => (
           <Route path={getPath.chatPage()} element={<CheckTokenPage />} />
           <Route path={getPath.loginPage()} element={<LoginPage />} />
           <Route path={getPath.signUpPage()} element={<SignUpPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={getPath.notFoundPage()} element={<NotFoundPage />} />
         </Routes>
       </Router>
       <ToastContainer
