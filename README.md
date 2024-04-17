@@ -7,10 +7,9 @@
 Project Chat is a simplified version of Slack, where in addition to default chat rooms you can create new ones, delete them and rename.
 
 ## Screenshots
-![login](https://github.com/purple-jabba/frontend-project-12/blob/main/frontend/src/assets/login.png)
-![registration](https://github.com/purple-jabba/frontend-project-12/blob/main/frontend/src/assets/registration.png)
-![chatpage](https://github.com/purple-jabba/frontend-project-12/blob/main/frontend/src/assets/chatpage.png)
-
+![login](https://github.com/purple-jabba/frontend-project-12/assets/129978501/241fd6dc-c3fe-42e2-9fce-207a85aa01b2)
+![registration](https://github.com/purple-jabba/frontend-project-12/assets/129978501/d237f3fe-bd98-4997-a12f-92ef80cc7e6e)
+![chatpage](https://github.com/purple-jabba/frontend-project-12/assets/129978501/32e1f972-eddb-4188-a009-d5d8c9387f02)
 
 [Project Chat link](https://chat-0df4.onrender.com/)
 
