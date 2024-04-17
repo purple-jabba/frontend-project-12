@@ -13,6 +13,8 @@ Project Chat is a simplified version of Slack, where in addition to default chat
 
 ### Modal windows screenshots
 ![addChannel](https://github.com/purple-jabba/frontend-project-12/assets/129978501/4526f843-e0d3-4116-851a-235206f95c9c)
+![updateChannel](https://github.com/purple-jabba/frontend-project-12/assets/129978501/c08bb25a-920e-4a70-9bd3-4fa1312305a3)
+![deleteChannel](https://github.com/purple-jabba/frontend-project-12/assets/129978501/f8cce6aa-c6d7-4825-8681-fa51442c14b6)
 
 [Project Chat link](https://chat-0df4.onrender.com/)
 
