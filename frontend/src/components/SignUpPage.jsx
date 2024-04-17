@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { addLoginInfo, logOut } from '../slices/authSlice.js';
+import { addLogInInfo, logOut } from '../slices/authSlice.js';
 import img from '../assets/avatar_1.jpg';
 import getPath from '../routes.js';
 
@@ -54,7 +54,7 @@ const SignUpPage = () => {
         const result = await axios.post(getPath.signUpPath(), { username, password });
         const { data } = result;
         dispatch(logOut());
-        dispatch(addLoginInfo({ data }));
+        dispatch(addLogInInfo({ data }));
         navigate(getPath.chatPage());
       } catch (error) {
         formik.setSubmitting(false);
