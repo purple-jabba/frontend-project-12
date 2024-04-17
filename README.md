@@ -3,7 +3,7 @@
 [![lint](https://github.com/purple-jabba/frontend-project-12/actions/workflows/lint.yml/badge.svg)](https://github.com/purple-jabba/frontend-project-12/actions/workflows/lint.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/285fb573722dc1169709/maintainability)](https://codeclimate.com/github/purple-jabba/frontend-project-12/maintainability)
 
-# [Project Chat](https://chat-0df4.onrender.com/) ![icon](https://img.icons8.com/external-bearicons-glyph-bearicons/64/external-Chat-happiness-bearicons-glyph-bearicons.png)
+# [Project Chat](https://chat-0df4.onrender.com/) ![icon](https://github.com/purple-jabba/frontend-project-12/assets/129978501/32128fbf-5ffe-4180-aa57-88fba5700e15)
 Project Chat is a simplified version of Slack, where in addition to default chat rooms you can create new ones, delete them and rename.
 
 ## Screenshots
