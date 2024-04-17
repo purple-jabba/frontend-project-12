@@ -11,6 +11,9 @@ Project Chat is a simplified version of Slack, where in addition to default chat
 ![registration](https://github.com/purple-jabba/frontend-project-12/assets/129978501/d237f3fe-bd98-4997-a12f-92ef80cc7e6e)
 ![chatpage](https://github.com/purple-jabba/frontend-project-12/assets/129978501/32e1f972-eddb-4188-a009-d5d8c9387f02)
 
+### Modal windows screenshots
+![addChannel](https://github.com/purple-jabba/frontend-project-12/assets/129978501/4526f843-e0d3-4116-851a-235206f95c9c)
+
 [Project Chat link](https://chat-0df4.onrender.com/)
 
 ## To run locally on your machine (Node.js and npm required)
